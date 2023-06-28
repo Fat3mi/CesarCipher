@@ -8,4 +8,4 @@ This program encrypts/decrypts your text.
 |omid|fat3mi|28/06/2023|
 
 
-`Thank You Fat3mi^TM`
+`Thank You Fat3mi`
