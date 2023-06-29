@@ -1,68 +1,51 @@
+from string import ascii_letters
+
+
 class CesarCode:
     def __init__(self, code, text):
         self.code = code
         self.text = text
 
-    alphabet = {'a': 0, 'b': 1, 'c': 2, 'd': 3, 'e': 4, 'f': 5, 'g': 6, 'h': 7, 'i': 8, 'j': 9, 'k': 10, 'l': 11,
-                'm': 12,
-                'n': 13, 'o': 14, 'p': 15, 'q': 16, 'r': 17, 's': 18, 't': 19, 'u': 20, 'v': 21, 'w': 22, 'x': 23,
-                'y': 24,
-                'z': 25}
+    alphabet = ascii_letters
 
     def encryption(self):
         cipher_text = ''
 
         for t in self.text:
-            if t == ' ':
-                cipher_text += ' '
+            if t not in self.alphabet:
+                cipher_text += t
             else:
-                new = self.alphabet.get(t) + self.code
-                if new > 25:
-                    newrec = new - 26
-                    for k, v in self.alphabet.items():
-                        if v == newrec:
-                            cipher_text += k
-                else:
-                    for k, v in self.alphabet.items():
-                        if v == new:
-                            cipher_text += k
+                new = (self.alphabet.index(t) + self.code) % len(self.alphabet)
+                cipher_text += self.alphabet[new]
 
         return cipher_text
 
     def decryption(self):
-        key = (25 - self.code) + 1
+        key = (51 - self.code) + 1
 
         plain_text = ''
 
         for t in self.text:
-            if t == ' ':
-                plain_text += ' '
+            if t not in self.alphabet:
+                plain_text += t
             else:
-                new = self.alphabet.get(t) + key
-                if new > 25:
-                    newrec = new - 26
-                    for k, v in self.alphabet.items():
-                        if v == newrec:
-                            plain_text += k
-                else:
-                    for k, v in self.alphabet.items():
-                        if v == new:
-                            plain_text += k
+                new = (self.alphabet.index(t) + key) % len(self.alphabet)
+                plain_text += self.alphabet[new]
 
         return plain_text
 
 
-cesar_calc = input('Welcome im omid fatemi \n choose -> Encryption / e Or Decryption / d :')
-itrate = int(input('please insert your encoding number (1~25) :'))
+cesar_calc = input('Encryption / e Or Decryption / d :')
+itrate = int(input('please insert your encoding number (1~51) :'))
 input_text = input('write your text for encryption : \n')
 
 if cesar_calc == 'e':
-    if itrate <= 25 and itrate >= 1:
+    if itrate <= 51 and itrate >= 1 and itrate != 26:
         ce = CesarCode(itrate, input_text)
         print(ce.encryption())
 
     else:
-        print('wrong number')
+        print('wrong number ist cant be 0 , 26 or 52')
 elif cesar_calc == 'd':
     cd = CesarCode(itrate, input_text)
     print(cd.decryption())
