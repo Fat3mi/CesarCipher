@@ -21,18 +21,9 @@ class CesarCode:
         return cipher_text
 
     def decryption(self):
-        key = (51 - self.code) + 1
-
-        plain_text = ''
-
-        for t in self.text:
-            if t not in self.alphabet:
-                plain_text += t
-            else:
-                new = (self.alphabet.index(t) + key) % len(self.alphabet)
-                plain_text += self.alphabet[new]
-
-        return plain_text
+        newcode = self.code * -1
+        decrypt = CesarCode(newcode, self.text)
+        return decrypt.encryption()
 
 
 cesar_calc = input('Encryption / e Or Decryption / d :')
